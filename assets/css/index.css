@@ -1,0 +1,80 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-image: url("../images/fondoBlackJack.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+header{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 80px;
+}
+
+button{
+    height: 50px;
+    width: 150px;
+}
+
+#pedir{
+    background-color: green;
+}
+#pasar{
+    background-color: red;
+}
+#doblar{
+    background-color: purple;
+}
+#propina{
+    background-color: yellow;
+}
+
+#espacioCrupier{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.CrupierCarta{
+    height: 135px;
+    width: auto;
+    margin-left: 10px;
+}
+
+#espacioJugadores{
+    width: 95%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+#jugador1Espacio,
+#jugador2Espacio,
+#jugador3Espacio,
+#jugador4Espacio,
+#jugador5Espacio,
+#jugador6Espacio {
+    height: 100%;
+    width: 16.67%;
+    display: flex;
+    flex-wrap: nowrap; /* Cambiado de wrap a nowrap */
+    justify-content: center;
+    align-items: center;
+}
+
+.JugadorCarta {
+    height: 135px;
+    width: auto; /* Asegúrate de que las cartas tengan un ancho adecuado */
+    margin-right: -120px; /* Cambia el margen negativo por un positivo */
+}
