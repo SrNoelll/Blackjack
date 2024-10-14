@@ -1,64 +1,118 @@
 html, body {
     height: 100%;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body{
+    font-family: 'Arial', 'Helvetica', sans-serif;
     background-image: url("../images/fondoBlackJack.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    color: #fefefe;
+    overflow-x: hidden;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-header{
+header {
     display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;
     width: 100%;
     height: 80px;
+    color: white;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-button{
+button {
     height: 50px;
     width: 150px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Sombra en los botones */
+    color: #fff;
 }
 
-#pedir{
-    background-color: green;
-}
-#pasar{
-    background-color: red;
-}
-#doblar{
-    background-color: purple;
-}
-#propina{
-    background-color: yellow;
+button:hover {
+    transform: scale(1.1); /* Hover agranda el botón */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombra más profunda en hover */
 }
 
-#espacioCrupier{
+#pedir {
+    background-color: #28a745; /* Verde suave */
+}
+
+#pasar {
+    background-color: #dc3545; /* Rojo suave */
+}
+
+#doblar {
+    background-color: #6f42c1; /* Morado */
+}
+
+#propina {
+    background-color: #ffc107; /* Amarillo intenso */
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    animation: parpadeo 1s infinite alternate; /* Efecto de parpadeo continuo */
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+    color: #212529; /* Texto oscuro */
+}
+
+@keyframes parpadeo {
+    0% {
+        background-color: #ffc107;
+        box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+    }
+    100% {
+        background-color: #FFD700;
+        box-shadow: 0 0 30px rgba(255, 255, 0, 1);
+    }
+}
+
+/* Área de Crupier */
+#espacioCrupier {
     width: 100%;
     height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.CrupierCarta{
-    height: 135px;
-    width: auto;
-    margin-left: 10px;
+    border-radius: 15px;
+    margin-bottom: 30px;
 }
 
-#espacioJugadores{
+.CrupierCarta {
+    height: 200px;
+    width: auto;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.CrupierCarta:hover {
+    transform: scale(1.05); /* Efecto hover para las cartas */
+}
+
+/* Área de Jugadores */
+#espacioJugadores {
     width: 95%;
     height: 150px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: space-between; /* Espacio uniforme entre jugadores */
+    margin: 0 auto;
 }
+
 #jugador1Espacio,
 #jugador2Espacio,
 #jugador3Espacio,
@@ -68,13 +122,68 @@ button{
     height: 100%;
     width: 16.67%;
     display: flex;
-    flex-wrap: nowrap; /* Cambiado de wrap a nowrap */
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    transition: transform 0.3s ease;
 }
 
 .JugadorCarta {
-    height: 135px;
-    width: auto; /* Asegúrate de que las cartas tengan un ancho adecuado */
-    margin-right: -120px; /* Cambia el margen negativo por un positivo */
+    height: 150px;
+    width: auto;
+    margin-right: -120px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.JugadorCarta:hover {
+    transform: translateY(-10px); /* Efecto hover para levantar las cartas */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Posiciones dinámicas de las cartas de los jugadores */
+#jugador1Espacio { transform: rotate(20deg); }
+#jugador2Espacio { transform: rotate(15deg) translateY(170px); }
+#jugador3Espacio { transform: rotate(5deg) translateY(300px); }
+#jugador4Espacio { transform: rotate(-5deg) translateY(300px); }
+#jugador5Espacio { transform: rotate(-15deg) translateY(170px); }
+#jugador6Espacio { transform: rotate(-20deg); }
+
+/* Área de Mensajes */
+#mensajes {
+    height: 300px;
+    width: 300px;
+    border: solid 5px #fcd34d;
+    margin-top: 300px;
+    margin-left: 700px;
+    overflow-y: auto;
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: #fef08a;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.textoMensaje {
+    font-size: small;
+    color: #000;
+    margin: 10px 0;
+    word-wrap: break-word;
+    background-color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -85,13 +85,16 @@ class Crupier{
     }
 }
 const aviso=document.querySelector("#mensajes");
+
 function mensaje(mensaje) {
-    let text = document.createElement('h2');
-    text.textContent=mensaje;
+    let text = document.createElement('p');
+    text.textContent = mensaje;
     text.classList.add('textoMensaje');
     aviso.appendChild(text);
 
+    aviso.scrollTop = aviso.scrollHeight;
 }
+
 
 const zonaJugador1=document.querySelector("#jugador1Espacio");
 
@@ -187,6 +190,10 @@ pasar.addEventListener('click', () => {
 
     turnoActual++;
     actualizarTurno();
+});
+
+propina.addEventListener('click', () => {
+    window.open('https://paypal.me/noelll2005?country.x=ES&locale.x=es_ES')
 });
 
 actualizarTurno();
