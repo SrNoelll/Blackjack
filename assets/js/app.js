@@ -44,6 +44,7 @@ class Jugador {
         this.cartasNum = [];
         this.pasar = false;
         this.espacio = espacio;
+        this.sumaElemento = this.espacio.querySelector('.sumaJugadores'); // Acceder al div de suma
     }
 
     pedirJugador() {
@@ -51,6 +52,7 @@ class Jugador {
         this.cartasNum.push(baraja.numeroCarta(this.cartas[this.cartas.length - 1]));
         this.suma = this.cartasNum.reduce((suma, carta) => suma + carta, 0);
         this.añadirCartaJugador();
+        this.actualizarSumaJugador(); // Actualizar la suma del jugador en la interfaz
     }
 
     añadirCartaJugador() {
@@ -60,7 +62,12 @@ class Jugador {
         imagen.src = 'assets/images/cartas/' + ultimaCarta + '.png';
         this.espacio.appendChild(imagen);
     }
+
+    actualizarSumaJugador() {
+        this.sumaElemento.textContent = this.suma; // Mostrar la suma en el div
+    }
 }
+
 
 class Crupier {
     constructor() {
@@ -129,9 +136,9 @@ const pedir = document.querySelector("#pedir"),
     //creo el crupier
     crupier = new Crupier,
     //creo la baraja
-    baraja = new Baraja(),
+    baraja = new Baraja();
     //pregunto el numero de jugadores, el minimo es 1 y el maximo 6
-    numeroJugadores = prompt("¿Cuántos jugadores van a participar? (1 a 6)");
+    let numeroJugadores = prompt("¿Cuántos jugadores van a participar? (1 a 6)");
 
     numeroJugadores = Math.min(Math.max(parseInt(numeroJugadores), 1), 6);
 
