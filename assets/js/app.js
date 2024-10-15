@@ -1,90 +1,144 @@
-const pedir = document.querySelector("#pedir");
-const pasar = document.querySelector("#pasar");
-const doblarr = document.querySelector("#doblar");
-const propina = document.querySelector("#propina");
-
-class Baraja{
-    constructor(){
-        this.cartas=[];
+//hacemos la clase baraja
+class Baraja {
+    constructor() {
+        this.cartas = []; //array de cartas
     }
-    crearBaraja(){
+    //metodo para crear la baraja
+    crearBaraja() {
         let baraja = [];
-        let tipoCarta = ['C','D','P','T'];
-        let especiales = ['A','K','Q','J'];
-        for(let i = 2;i<=10;i++){
-            for(let tipo of tipoCarta){
+        let tipoCarta = ['C', 'D', 'P', 'T'];
+        let especiales = ['A', 'K', 'Q', 'J'];
+        for (let i = 2; i <= 10; i++) {
+            for (let tipo of tipoCarta) { //da valor a las cartas normales
                 baraja.push(i + tipo);
             }
         }
-        for(let tipo of tipoCarta){
-            for(let esp of especiales){
+        for (let tipo of tipoCarta) { // da valor a las cartas especiales
+            for (let esp of especiales) {
                 baraja.push(esp + tipo);
             }
         }
         baraja = _.shuffle(baraja);
-        this.cartas=baraja;
+        this.cartas = baraja;
     }
+
     pedirCarta() {
-        if(this.cartas.length === 0){
+        if (this.cartas.length === 0) {
             throw "No hay cartas";
         }
         const carta = this.cartas.pop();
         return carta;
     }
-    numeroCarta(carta){
-        let numero = carta.substring(0,carta.length-1)
-        isNaN(numero)?numero === 'A' ? numero = 11: numero = 10:numero *= 1;
+
+    numeroCarta(carta) {
+        let numero = carta.substring(0, carta.length - 1);
+        isNaN(numero) ? numero === 'A' ? numero = 11 : numero = 10 : numero *= 1;
         return numero;
     }
 }
 
-class Jugador{
-    constructor(espacio){
-        this.cartas=[];
-        this.suma=[];
-        this.cartasNum=[];
-        this.pasar=false;
-        this.espacio=espacio;
+class Jugador {
+    constructor(espacio) {
+        this.cartas = [];
+        this.suma = [];
+        this.cartasNum = [];
+        this.pasar = false;
+        this.espacio = espacio;
     }
-    pedirJugador(){
+
+    pedirJugador() {
         this.cartas.push(baraja.pedirCarta());
-        this.cartasNum.push(baraja.numeroCarta(this.cartas[this.cartas.length-1]))
+        this.cartasNum.push(baraja.numeroCarta(this.cartas[this.cartas.length - 1]));
         this.suma = this.cartasNum.reduce((suma, carta) => suma + carta, 0);
-        console.log(this.cartas, this.suma);
-        this.añadirCartaJugador()
+        this.añadirCartaJugador();
     }
-    añadirCartaJugador(){
+
+    añadirCartaJugador() {
         const ultimaCarta = this.cartas[this.cartas.length - 1];
         const imagen = document.createElement('img');
         imagen.classList.add('JugadorCarta');
         imagen.src = 'assets/images/cartas/' + ultimaCarta + '.png';
-        console.log(this.espacio);
         this.espacio.appendChild(imagen);
     }
 }
 
-class Crupier{
-    constructor(){
-        this.cartas=[];
-        this.suma=0;
-        this.cartasNum=[];
+class Crupier {
+    constructor() {
+        this.cartas = [];
+        this.suma = 0;
+        this.cartasNum = [];
+        this.cartaOcultaElemento = null; // Almacena la carta oculta para mostrarla más tarde
     }
-    pedirCrupier(){
+
+    pedirCrupier(oculta) {
         this.cartas.push(baraja.pedirCarta());
-        this.cartasNum.push(baraja.numeroCarta(this.cartas[this.cartas.length-1]))
+        this.cartasNum.push(baraja.numeroCarta(this.cartas[this.cartas.length - 1]));
         this.suma = this.cartasNum.reduce((suma, carta) => suma + carta, 0);
-        console.log(this.cartas, this.suma);
-        this.añadirCartaCrupier();
+        if (oculta === undefined) {
+            this.añadirCartaCrupier();
+        } else {
+            this.añadirCartaCrupier(true);
+        }
     }
-    añadirCartaCrupier(){
+
+    añadirCartaCrupier(oculta) {
         const ultimaCarta = this.cartas[this.cartas.length - 1];
         const imagen = document.createElement('img');
         imagen.classList.add('CrupierCarta');
-        imagen.src = 'assets/images/cartas/' + ultimaCarta + '.png';
+
+        if (oculta === undefined) {
+            imagen.src = 'assets/images/cartas/' + ultimaCarta + '.png';
+        } else {
+            imagen.src = 'assets/images/cartas/reverso-rojo.png';
+            this.cartaOcultaElemento = imagen; // Guardamos la referencia de la carta oculta
+        }
+
         espacioCrupier.appendChild(imagen);
     }
+
+    revelarCartaOculta() {
+        if (this.cartaOcultaElemento) {
+            const cartaOculta = this.cartas[1]; // La segunda carta es la oculta
+            this.cartaOcultaElemento.src = 'assets/images/cartas/' + cartaOculta + '.png';
+            this.cartaOcultaElemento = null; // Limpiamos la referencia
+        }
+    }
 }
-const aviso=document.querySelector("#mensajes");
+
+//seleccionamos los botones de dom
+const pedir = document.querySelector("#pedir"),
+	pasar = document.querySelector("#pasar"),
+	reiniciar = document.querySelector("#reiniciar"),
+	propina = document.querySelector("#propina"),
+//crea las zonas de los jugadores
+    zonaJugador1 = document.querySelector("#jugador1Espacio"),
+	zonaJugador2 = document.querySelector("#jugador2Espacio"),
+	zonaJugador3 = document.querySelector("#jugador3Espacio"),
+	zonaJugador4 = document.querySelector("#jugador4Espacio"),
+	zonaJugador5 = document.querySelector("#jugador5Espacio"),
+	zonaJugador6 = document.querySelector("#jugador6Espacio"),
+	espacioCrupier = document.querySelector("#espacioCrupier"),
+    aviso = document.querySelector("#mensajes"),
+    //creo los objetos jugadores con sus respectivas zonas como parametro
+    jugador1 = new Jugador(zonaJugador1),
+    jugador2 = new Jugador(zonaJugador2),
+    jugador3 = new Jugador(zonaJugador3),
+    jugador4 = new Jugador(zonaJugador4),
+    jugador5 = new Jugador(zonaJugador5),
+    jugador6 = new Jugador(zonaJugador6),
+    //creo el crupier
+    crupier = new Crupier,
+    //creo la baraja
+    baraja = new Baraja(),
+    //pregunto el numero de jugadores, el minimo es 1 y el maximo 6
+    numeroJugadores = prompt("¿Cuántos jugadores van a participar? (1 a 6)");
+
+    numeroJugadores = Math.min(Math.max(parseInt(numeroJugadores), 1), 6);
+
+    //hago un array de jugadores
+    let jugadores = [jugador1, jugador2, jugador3, jugador4, jugador5, jugador6];
+    jugadores = jugadores.slice(0, numeroJugadores);
+    let turnoActual = 0;
 
 function mensaje(mensaje) {
     let text = document.createElement('p');
@@ -95,44 +149,11 @@ function mensaje(mensaje) {
     aviso.scrollTop = aviso.scrollHeight;
 }
 
-
-const zonaJugador1=document.querySelector("#jugador1Espacio");
-
-const zonaJugador2=document.querySelector("#jugador2Espacio");
-
-const zonaJugador3=document.querySelector("#jugador3Espacio");
-
-const zonaJugador4=document.querySelector("#jugador4Espacio");
-
-const zonaJugador5=document.querySelector("#jugador5Espacio");
-
-const zonaJugador6=document.querySelector("#jugador6Espacio");
-
-const espacioCrupier = document.querySelector("#espacioCrupier");
-
-const jugador1 = new Jugador(zonaJugador1);
-const jugador2 = new Jugador(zonaJugador2);
-const jugador3 = new Jugador(zonaJugador3);
-const jugador4 = new Jugador(zonaJugador4);
-const jugador5 = new Jugador(zonaJugador5);
-const jugador6 = new Jugador(zonaJugador6);
-
-const crupier = new Crupier;
-const baraja = new Baraja();
-
-let numeroJugadores = prompt("¿Cuántos jugadores van a participar? (1 a 6)");
-
-numeroJugadores = Math.min(Math.max(parseInt(numeroJugadores), 1), 6);
-
-let jugadores = [jugador1, jugador2, jugador3, jugador4, jugador5, jugador6];
-jugadores = jugadores.slice(0, numeroJugadores);
-let turnoActual = 0;
-
+//creo la baraja
 baraja.crearBaraja();
-console.log(baraja.cartas);
 
 crupier.pedirCrupier();
-crupier.pedirCrupier();
+crupier.pedirCrupier(true);
 
 jugadores.forEach(jugador => {
     jugador.pedirJugador();
@@ -141,14 +162,14 @@ jugadores.forEach(jugador => {
 
 function actualizarTurno() {
     if (turnoActual >= numeroJugadores) {
-        turnoCrupier();
+        turnoCrupier(); // Aquí se revelará la carta oculta cuando todos hayan pasado
     } else {
         mensaje(`Turno del jugador ${turnoActual + 1}`);
     }
 }
 
 function turnoCrupier() {
-    console.log('Turno del crupier');
+    crupier.revelarCartaOculta(); // Revelamos la carta oculta antes de que el crupier juegue
     while (crupier.suma < 17) {
         crupier.pedirCrupier();
 
@@ -197,3 +218,7 @@ propina.addEventListener('click', () => {
 });
 
 actualizarTurno();
+
+reiniciar.addEventListener('click', () => {
+    location.reload();
+});
