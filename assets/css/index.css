@@ -37,37 +37,37 @@ button {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Sombra en los botones */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     color: #fff;
 }
 
 button:hover {
-    transform: scale(1.1); /* Hover agranda el botón */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombra más profunda en hover */
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 #pedir {
-    background-color: #28a745; /* Verde suave */
+    background-color: #28a745;
 }
 
 #pasar {
-    background-color: #dc3545; /* Rojo suave */
+    background-color: #dc3545;
 }
 
 #reiniciar {
-    background-color: #6f42c1; /* Morado */
+    background-color: #6f42c1;
 }
 
 #propina {
-    background-color: #ffc107; /* Amarillo intenso */
+    background-color: #ffc107;
     padding: 10px 20px;
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    animation: parpadeo 1s infinite alternate; /* Efecto de parpadeo continuo */
+    animation: parpadeo 1s infinite alternate;
     box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
-    color: #212529; /* Texto oscuro */
+    color: #212529;
 }
 
 @keyframes parpadeo {
@@ -81,7 +81,6 @@ button:hover {
     }
 }
 
-/* Área de Crupier */
 #espacioCrupier {
     width: 100%;
     height: 300px;
@@ -100,16 +99,15 @@ button:hover {
 }
 
 .CrupierCarta:hover {
-    transform: scale(1.05); /* Efecto hover para las cartas */
+    transform: scale(1.05);
 }
 
-/* Área de Jugadores */
 #espacioJugadores {
     width: 95%;
     height: 150px;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Espacio uniforme entre jugadores */
+    justify-content: space-between;
     margin: 0 auto;
     margin-right: 120px;
 }
@@ -137,11 +135,10 @@ button:hover {
 }
 
 .JugadorCarta:hover {
-    transform: translateY(-10px); /* Efecto hover para levantar las cartas */
+    transform: translateY(-10px);
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Posiciones dinámicas de las cartas de los jugadores */
 #jugador1Espacio { transform: rotate(20deg); }
 #jugador2Espacio { transform: rotate(15deg) translateY(170px); }
 #jugador3Espacio { transform: rotate(5deg) translateY(300px); }
